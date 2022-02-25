@@ -25,7 +25,7 @@ PUTCHAR_PROTOTYPE
 
 int fputc(int ch, FILE *f)
 {
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xffff);
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xffff);
   return ch;
 }
 #endif
@@ -58,13 +58,14 @@ void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 19200;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
   huart1.Init.Mode = UART_MODE_TX_RX;
   huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+	
   if (HAL_UART_Init(&huart1) != HAL_OK)
   {
     Error_Handler();
@@ -75,12 +76,12 @@ void MX_USART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
-	HAL_UART_Receive_IT(&huart1, (u8 *)aRxBuffer, RXBUFFERSIZE);//该函数会开启接收中断：标志位UART_IT_RXNE，并且设置接收缓冲以及接收缓冲接收最大数据量
-  
+	//HAL_UART_Receive_IT(&huart1, (u8 *)aRxBuffer1, RXBUFFERSIZE);//该函数会开启接收中断：标志位UART_IT_RXNE，并且设置接收缓冲以及接收缓冲接收最大数据量
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXFNE | UART_IT_RXNE);
+  __HAL_UART_CLEAR_FLAG(&huart1,UART_IT_RXNE| UART_IT_RXFNE);
   /* USER CODE END USART1_Init 2 */
 
 }
-
 
 
 /**
@@ -258,20 +259,20 @@ void USART1_IRQHandler(void)
 
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
+//  __HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE | UART_FLAG_RXFNE);
+//  __HAL_UART_GET_IT_SOURCE(&huart1, UART_IT_RXNE | UART_IT_RXFNE);
+//  __HAL_UART_GET_IT(&huart1, UART_IT_RXNE | UART_IT_RXFNE);	
+  __HAL_UART_CLEAR_FLAG(&huart1,UART_IT_RXNE| UART_IT_RXFNE);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+  usart1_rx_irq((u8)huart1.Instance->RDR &(u8)0x00FF);
   /* USER CODE END USART1_IRQn 1 */
+
 }
 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
-	if(huart->Instance == USART1)
-	{
-		HAL_UART_Transmit(&huart1,aRxBuffer,1,100);	// 接收到数据马上使用串口1发送出去
-		HAL_UART_Receive_IT(&huart1,aRxBuffer,1);		// 重新使能串口1接收中断	
-	}
 	
 }
 

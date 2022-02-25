@@ -1,10 +1,12 @@
 #include "usart.h"
-
+#include "bsp.h"
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
-u8 au8rx_buff[200] = {0};
-static u8 u8index = 0;
+
+volatile u8 gu8rx_data_flag = 0;
+volatile __align(4) u8 g_au8Rxbuffer[RX_DATA_MAX_LEN];
+volatile u16 gu16rx_index = 0;
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
      set to 'Yes') calls __io_putchar() */
@@ -26,7 +28,7 @@ PUTCHAR_PROTOTYPE
 
 int fputc(int ch, FILE *f)
 {
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xffff);
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xffff);
   return ch;
 }
 #endif
@@ -61,7 +63,7 @@ void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 19200;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -256,6 +258,14 @@ HAL_StatusTypeDef usart2_tx(u8 *pu8data, u16 u16size)
 	return iErro;
 }
 
+HAL_StatusTypeDef usart1_tx(u8 *pu8data, u16 u16size)
+{
+	HAL_StatusTypeDef iErro = HAL_ERROR;
+	
+	iErro = HAL_UART_Transmit(&huart1,pu8data,u16size,0xffff);
+	
+	return iErro;
+}
 
 
 
@@ -274,8 +284,9 @@ void USART1_IRQHandler(void)
   __HAL_UART_GET_IT(&huart1, UART_IT_RXNE | UART_IT_RXFNE);
   //HAL_UART_Transmit(&huart1,aRxBuffer1,1,100);	
   /* USER CODE BEGIN USART1_IRQn 1 */
-  au8rx_buff[u8index] = huart1.Instance->RDR;
-  u8index ++;
+  gu8rx_data_flag = 1;
+  g_au8Rxbuffer[gu16rx_index] = huart1.Instance->RDR;
+  gu16rx_index ++;
   /* USER CODE END USART1_IRQn 1 */
 }
 
@@ -311,11 +322,11 @@ void USART2_IRQHandler(void)
 //	}
 //}
 
-/*如采用回调函数做处理，没清标志位的话，需要重新使能串口中断，一般放在main的while(1)中*/
-void init_rx_usart(void)
-{
-	 HAL_UART_Receive_IT(&huart1,aRxBuffer1,RXBUFFERSIZE);		// 重新使能串口1接收中断	
-}
+///*如采用回调函数做处理，没清标志位的话，需要重新使能串口中断，一般放在main的while(1)中*/
+//void init_rx_usart(void)
+//{
+//	 HAL_UART_Receive_IT(&huart1,aRxBuffer1,RXBUFFERSIZE);		// 重新使能串口1接收中断	
+//}
 
 
 

@@ -15,6 +15,7 @@
 #include "timer.h"
 #include "usart.h"
 #include "flash.h"
+#include "cir_handle.h"
 
 typedef int32_t  s32;
 typedef int16_t s16;

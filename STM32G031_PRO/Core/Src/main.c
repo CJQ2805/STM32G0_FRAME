@@ -27,19 +27,23 @@
   */
 int main(void)
 {
-//  SCB->VTOR = FLASH_BASE | 0x5000; /* Vector Table Relocation in Internal FLASH. */ 
+  SCB->VTOR = FLASH_BASE | 0x5000; /* Vector Table Relocation in Internal FLASH. */ 
   //__enable_irq();	
-  APP_Init();
+
   u32_tim_dly_t  tim_dly;
+  static u8 x;
+  APP_Init();	
   while (1)
   {
 	  
 	 APP_PollingTask();
 
-//	 if(Ok == TMR0_Delay(TRUE, &tim_dly, TMR0_DELAY_MS(1000)))
-//	 {
-//		printf("CJQ2805 test \r\n"); 		
-//	 }
+	 if(Ok == TMR0_Delay(TRUE, &tim_dly, TMR0_DELAY_MS(2000)))
+	 {
+		x = !x;
+		PC6Out(x);		 
+		printf("CJQ2805 test \r\n"); 		
+	 }
  
   }
 

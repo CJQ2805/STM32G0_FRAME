@@ -27,16 +27,14 @@
   */
 int main(void)
 {
+	
   APP_Init();
-  u32_tim_dly_t  tim_dly;
+
+  
   while (1)
   {
-	  
+
 	 APP_PollingTask();
- 	 if(Ok == TMR0_Delay(TRUE, &tim_dly, TMR0_DELAY_MS(1000)))
-	 {
-		//printf("CJQ2805 test \r\n"); 		
-	 }
  
   }
 

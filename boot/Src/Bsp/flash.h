@@ -28,9 +28,11 @@ typedef uint8_t  u8;
 u8 STMFLASH_GetStatus(void);				  //获得状态
 u8 STMFLASH_WaitDone(u16 time);				  //等待操作结束
  
+u32 STMFLASH_ReadWord(u32 faddr);
+void STMFLASH_Read(u32 u32addr, u32 len, u32  *data);
 void STMFLASH_WriteLenByte(u32 WriteAddr,u32 DataToWrite,u16 Len);	//指定地址开始写入指定长度的数据
 u32 STMFLASH_ReadLenByte(u32 ReadAddr,u16 Len);						//指定地址开始读取指定长度数据
-void STMFLASH_Write(u32 WriteAddr,unsigned char *pBuffer,int WordSize);
+u8 STMFLASH_Write(u32 WriteAddr,uint64_t *pBuffer,int WordSize);
 void jump_application(u32 u32addr);
 //测试写入
 

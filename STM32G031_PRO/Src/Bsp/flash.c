@@ -34,7 +34,7 @@ void STMFLASH_Write(u32 WriteAddr,unsigned char *pBuffer,int WordSize)
  	u16 i;    
 	u32 offaddr;   //去掉0X08000000后的地址
 	FLASH_EraseInitTypeDef flash_init;
-	
+	u32 u32flash_err = 0;  	
 	if(WriteAddr<STM32_ADDR_FLASH_SECTOR_0||(WriteAddr>=(STM32_ADDR_FLASH_SECTOR_0+1024*STM32_FLASH_SIZE)))return;//非法地址
 	
 	HAL_FLASH_Unlock();					//解锁
@@ -54,14 +54,20 @@ void STMFLASH_Write(u32 WriteAddr,unsigned char *pBuffer,int WordSize)
 		flash_init.TypeErase = FLASH_TYPEERASE_PAGES;
 		flash_init.Page = u32sector_addr;
 		flash_init.NbPages = 1;
-		FLASH_PageErase(flash_init.Banks, flash_init.Page);	//擦除这个扇区
-
+		if(HAL_FLASHEx_Erase(&flash_init, &u32flash_err) != HAL_OK)	//擦除这个扇区
+		{
+			printf("Erase error");
+		}
+		
 	}else 
 	{
 		
 		for(i = 0; i< WordSize; i++ )
 		{
-			HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, WriteAddr+(i*8), pBuffer[i]);	//一次写入64字节
+			if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, WriteAddr+(i*8), pBuffer[i]) != HAL_OK)//一次写入64字节
+			{
+				printf("写入异常");		
+			}				
 		}
 	}
 	 

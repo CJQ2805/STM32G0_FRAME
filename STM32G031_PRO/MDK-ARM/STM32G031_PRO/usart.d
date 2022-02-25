@@ -53,3 +53,4 @@ stm32g031_pro\usart.o: ..\Src\Bsp\iic.h
 stm32g031_pro\usart.o: ..\Src\Bsp\timer.h
 stm32g031_pro\usart.o: ..\Src\Bsp\usart.h
 stm32g031_pro\usart.o: ..\Src\Bsp\flash.h
+stm32g031_pro\usart.o: ..\Src\Tool\cir_handle.h

@@ -6,6 +6,6 @@
 void APP_Init(void);
 void APP_PollingTask(void);
 void APP_ParamInit(void);
-
+void APP_ParamLoad(void);
 #endif
 

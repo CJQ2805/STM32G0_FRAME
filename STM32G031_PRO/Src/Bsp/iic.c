@@ -268,12 +268,10 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
 //	}
 
 //}
-/*现在的情况读可以读，但是发送直接卡死，不再进中断，或者打断点后也是不再进中断，后续再查*/
-u8 au8Rx1_Buffer[40] = {0};
+
 volatile u_IIC_ISR_Register u32ISR1_reg;
 u32 u32I2C_DeviceFlag = 0;
 
-u8 u8Rx_Data_len = 0; 
 void I2C1_EV_IRQHandler(void)
 {
 	//HAL_I2C_EV_IRQHandler(&hi2c1);
@@ -338,14 +336,7 @@ void I2C1_EV_IRQHandler(void)
 	
 	if((hi2c1.Instance->ISR & I2C_FLAG_TXIS) != 0)
 	{
-//		if(u32ISR1_reg.tIIC_ISR_Register.DIR)
-//		{
-//			hi2c1.Instance->TXDR = 0x0a;		
-//		}
-//		else
-//		{
-//			
-//		}
+
 		if (I2C_DEVICE_REGADDRESS == I2C_REG_TEST_ADD)  //read and write
 		{
 			if(I2C_DEVICE_REGOFFSET < I2C_REG_TEST_SIZE)
@@ -367,9 +358,15 @@ void I2C1_EV_IRQHandler(void)
 			hi2c1.Instance->TXDR = I2C_DEVICE_DR_NULL_R;
 		}
 		
+//		if(u32ISR1_reg.tIIC_ISR_Register.DIR)
+//		{
+//			hi2c1.Instance->TXDR = 0x0a;		
+//		}
+//		else
+//		{
+//			
+//		}		
 	}	
-	
-	
 	
 	if(hi2c1.Instance->ISR & I2C_FLAG_RXNE)
 	{
@@ -451,6 +448,24 @@ void I2C1_EV_IRQHandler(void)
 
 }
 
+void I2C1_ER_IRQHandler(void)
+{
+	if((hi2c1.Instance->ISR & I2C_ISR_BERR) != 0)
+	{
+		__HAL_I2C_CLEAR_FLAG(&hi2c1,I2C_ICR_BERRCF);
+	}
+	
+	if((hi2c1.Instance->ISR & I2C_ISR_ARLO) != 0)
+	{
+		__HAL_I2C_CLEAR_FLAG(&hi2c1,I2C_ICR_ARLOCF);		
+	}
+	
+	if((hi2c1.Instance->ISR & I2C_FLAG_OVR) != 0)
+	{
+		__HAL_I2C_CLEAR_FLAG(&hi2c1,I2C_ICR_OVRCF);	
+	}
+}
+
 /**
   * @brief This function handles I2C1 event global interrupt / I2C1 wake-up interrupt through EXTI line 23.
   */
@@ -461,6 +476,7 @@ void I2C1_IRQHandler(void)
   /* USER CODE END I2C1_IRQn 0 */
   if (hi2c1.Instance->ISR & (I2C_FLAG_BERR | I2C_FLAG_ARLO | I2C_FLAG_OVR)) {
     HAL_I2C_ER_IRQHandler(&hi2c1);
+	I2C1_ER_IRQHandler();
   } else {
 	HAL_I2C_EV_IRQHandler(&hi2c1);
 	I2C1_EV_IRQHandler();

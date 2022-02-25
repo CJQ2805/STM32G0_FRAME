@@ -22,12 +22,109 @@ Dialog DLL:      TARMCM1.DLL V1.14.0.0
  
 <h2>Project:</h2>
 H:\work test\STM32_G0\project\boot\MDK-ARM\STM32G031_PRO.uvprojx
-Project File Date:  02/08/2022
+Project File Date:  02/23/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\keil5\ARM\ARMCC\Bin'
-Build target 'STM32G031_PRO'
-"STM32G031_PRO\STM32G031_PRO.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'STM32G031_PRO'
+compiling stm32g0xx_ll_rcc.c...
+assembling startup_stm32g031xx.s...
+compiling stm32g0xx_hal_flash.c...
+compiling stm32g0xx_hal_rcc_ex.c...
+compiling stm32g0xx_hal_flash_ex.c...
+compiling stm32g0xx_it.c...
+compiling stm32g0xx_hal_msp.c...
+compiling main.c...
+compiling stm32g0xx_hal_rcc.c...
+compiling stm32g0xx_hal_gpio.c...
+compiling stm32g0xx_hal_iwdg.c...
+compiling stm32g0xx_hal_pwr.c...
+compiling stm32g0xx_hal_pwr_ex.c...
+compiling stm32g0xx_hal.c...
+compiling stm32g0xx_hal_cortex.c...
+compiling stm32g0xx_hal_tim.c...
+compiling stm32g0xx_hal_tim_ex.c...
+compiling stm32g0xx_hal_uart.c...
+compiling stm32g0xx_hal_uart_ex.c...
+compiling stm32g0xx_hal_dma_ex.c...
+compiling combin_pack.c...
+..\Src\App\combin_pack.h(4): error:  #20: identifier "uint32_t" is undefined
+  typedef uint32_t  u32;
+..\Src\App\combin_pack.h(5): error:  #20: identifier "uint16_t" is undefined
+  typedef uint16_t u16;
+..\Src\App\combin_pack.h(6): error:  #20: identifier "uint8_t" is undefined
+  typedef uint8_t  u8;
+..\Src\Bsp\adc.h(5): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint32_t  u32;
+KB: Unexpected type: 0
+error type>(5): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint32_t  u32;
+..\Src\Bsp\usart.h(6): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint16_t u16;
+..\Src\Bsp\usart.h(7): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint8_t  u8;
+KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+error type>(11): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint32_t  u32;
+..\Src\Bsp\flash.h(12): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint16_t u16;
+..\Src\Bsp\flash.h(13): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint8_t  u8;
+KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+error type>(91): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint32_t  u32;
+..\Src\Bsp\bsp.h(92): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint16_t u16;
+..\Src\Bsp\bsp.h(93): warning:  #983-D: typedef name has already been declared (with similar type)
+  typedef uint8_t  u8;
+KB: Unexpected type: 0
+<error type>KB: Unexpected type: 0
+<error type>..\Src\App\combin_pack.c: 10 warnings, 3 errors
+compiling stm32g0xx_hal_dma.c...
+compiling system_stm32g0xx.c...
+compiling bsp.c...
+compiling app.c...
+..\Src\App\app.c(35): warning:  #188-D: enumerated type mixed with another type
+  		PC6Out(x);		 
+..\Src\App\app.c(12): warning:  #177-D: variable "jumpapp_dly"  was declared but never referenced
+      static u32_tim_dly_t apptim_dly , jumpapp_dly;	
+..\Src\App\app.c: 2 warnings, 0 errors
+compiling iap.c...
+..\Src\App\iap.c(119): warning:  #167-D: argument of type "volatile u8 *" is incompatible with parameter of type "u8 *"
+  		u32CRC_Vaule = CRC_16(g_au8Rxbuffer, 4);
+..\Src\App\iap.c(130): warning:  #940-D: missing return statement at end of non-void function "cmd_file_end" 
+  }
+..\Src\App\iap.c(143): warning:  #167-D: argument of type "volatile u8 *" is incompatible with parameter of type "u8 *"
+  		u32CRC_Vaule = CRC_16(g_au8Rxbuffer, 4);
+..\Src\App\iap.c(170): warning:  #167-D: argument of type "volatile u8 *" is incompatible with parameter of type "u8 *"
+  		u32CRC_Vaule = CRC_16(g_au8Rxbuffer, 4);
+..\Src\App\iap.c(183): warning:  #940-D: missing return statement at end of non-void function "cmd_exit_update" 
+  }
+..\Src\App\iap.c(225): warning:  #188-D: enumerated type mixed with another type
+  		PC6Out(x);	
+..\Src\App\iap.c: 6 warnings, 0 errors
+compiling gpio.c...
+compiling timer.c...
+compiling iwdg.c...
+compiling flash.c...
+..\Src\Bsp\flash.c(49): warning:  #550-D: variable "flash_erro_flag"  was set but never used
+  	u8 flash_erro_flag = 0;
+..\Src\Bsp\flash.c: 1 warning, 0 errors
+compiling usart.c...
+"STM32G031_PRO\STM32G031_PRO.axf" - 3 Error(s), 19 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +147,8 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:00
+Target not created.
+Build Time Elapsed:  00:00:19
 </pre>
 </body>
 </html>

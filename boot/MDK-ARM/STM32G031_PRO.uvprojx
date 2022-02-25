@@ -312,7 +312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -516,6 +516,16 @@
               <FileName>app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\App\app.c</FilePath>
+            </File>
+            <File>
+              <FileName>iap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\App\iap.c</FilePath>
+            </File>
+            <File>
+              <FileName>combin_pack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\App\combin_pack.c</FilePath>
             </File>
           </Files>
         </Group>

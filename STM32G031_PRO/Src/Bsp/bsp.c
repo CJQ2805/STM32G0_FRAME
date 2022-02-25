@@ -13,7 +13,7 @@ void SystemClock_Config(void);
 
 void BSP_Init(void)
 {	
-  //__enable_irq();	
+  __enable_irq();	
   HAL_Init();
   MX_GPIO_Init();
   MX_ADC1_Init();

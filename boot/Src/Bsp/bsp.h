@@ -5,6 +5,7 @@
 #include "stm32g0xx_it.h"
 #include "stm32g0xx_hal.h"
 
+#include "combin_pack.h"
 #include "stdio.h"
 #include "stdbool.h"
 #include "string.h"
@@ -15,6 +16,7 @@
 #include "timer.h"
 #include "usart.h"
 #include "flash.h"
+#include "iap.h"
 
 typedef enum
 {
